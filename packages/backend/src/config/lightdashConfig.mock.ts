@@ -7,6 +7,7 @@ export const lightdashConfigMock: LightdashConfig = {
         disablePat: false,
         enableGroupSync: false,
         disablePasswordAuthentication: false,
+        disableRegistration: false,
         enableOidcLinking: false,
         google: {
             loginPath: '',

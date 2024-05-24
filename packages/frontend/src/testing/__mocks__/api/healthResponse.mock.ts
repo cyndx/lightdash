@@ -45,6 +45,7 @@ export default function mockHealthResponse(
         hasSlack: false,
         auth: {
             disablePasswordAuthentication: false,
+            disableRegistration: false,
             google: {
                 googleDriveApiKey: '',
                 oauth2ClientId: '',

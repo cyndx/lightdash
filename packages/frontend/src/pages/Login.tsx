@@ -105,6 +105,8 @@ const LoginContent: FC = () => {
     const allowPasswordAuthentication =
         !health.data?.auth.disablePasswordAuthentication;
 
+    const allowRegistration = !health.data?.auth.disableRegistration;
+
     const isDemo = health.data?.mode === LightdashMode.DEMO;
     useEffect(() => {
         if (isDemo && isIdle) {
@@ -118,7 +120,11 @@ const LoginContent: FC = () => {
     if (health.isInitialLoading || isDemo) {
         return <PageSpinner />;
     }
-    if (health.status === 'success' && health.data?.requiresOrgRegistration) {
+    if (
+        health.status === 'success' &&
+        health.data?.requiresOrgRegistration &&
+        allowRegistration
+    ) {
         return (
             <Redirect
                 to={{
@@ -182,10 +188,12 @@ const LoginContent: FC = () => {
                         Forgot your password?
                     </Anchor>
                 )}
-                <Text mx="auto">
-                    Don't have an account?{' '}
-                    <Anchor href="/register">Sign up</Anchor>
-                </Text>
+                {!health.data?.auth.disableRegistration && (
+                    <Text mx="auto">
+                        Don't have an account?{' '}
+                        <Anchor href="/register">Sign up</Anchor>
+                    </Text>
+                )}
             </Stack>
         </form>
     );

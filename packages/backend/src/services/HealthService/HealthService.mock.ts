@@ -10,6 +10,7 @@ export const BaseResponse = {
     localDbtEnabled: true,
     auth: {
         disablePasswordAuthentication: false,
+        disableRegistration: false,
         google: {
             loginPath: '',
             oauth2ClientId: '',
@@ -59,6 +60,7 @@ export const Config = {
     mode: LightdashMode.DEFAULT,
     auth: {
         disablePasswordAuthentication: false,
+        disableRegistration: false,
         google: {
             loginPath: '',
             oauth2ClientId: '',

@@ -108,6 +108,8 @@ export class HealthService extends BaseService {
             auth: {
                 disablePasswordAuthentication:
                     this.lightdashConfig.auth.disablePasswordAuthentication,
+                disableRegistration:
+                    this.lightdashConfig.auth.disableRegistration,
                 google: {
                     loginPath: this.lightdashConfig.auth.google.loginPath,
                     oauth2ClientId:

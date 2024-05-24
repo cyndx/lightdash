@@ -335,6 +335,7 @@ type AuthOidcConfig = {
 
 export type AuthConfig = {
     disablePasswordAuthentication: boolean;
+    disableRegistration: boolean;
     enableGroupSync: boolean;
     enableOidcLinking: boolean;
     google: AuthGoogleConfig;
@@ -455,6 +456,8 @@ const mergeWithEnvironment = (config: LightdashConfigIn): LightdashConfig => {
             disablePat: process.env.DISABLE_PAT === 'true',
             disablePasswordAuthentication:
                 process.env.AUTH_DISABLE_PASSWORD_AUTHENTICATION === 'true',
+            disableRegistration:
+                process.env.AUTH_DISABLE_REGISTRATION === 'true',
             enableGroupSync: process.env.AUTH_ENABLE_GROUP_SYNC === 'true',
             enableOidcLinking: process.env.AUTH_ENABLE_OIDC_LINKING === 'true',
             google: {

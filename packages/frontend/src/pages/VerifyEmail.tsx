@@ -79,8 +79,8 @@ const VerifyEmailPage: FC = () => {
                     <VerifyEmailForm />
                 </Card>
                 <Text color="gray.6" ta="center" px="xs">
-                    You need to verify your email to get access to Lightdash. If
-                    you need help, you can{' '}
+                    You need to verify your email to get access to $
+                    {health.data?.siteName}. If you need help, you can{' '}
                     <Anchor onClick={() => showIntercom()}>
                         chat to support here.
                     </Anchor>

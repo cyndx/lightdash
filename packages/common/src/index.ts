@@ -697,6 +697,7 @@ export type HealthState = {
     sentry: Pick<SentryConfig, 'frontend' | 'release' | 'environment'>;
     auth: {
         disablePasswordAuthentication: boolean;
+        disableRegistration: boolean;
         google: {
             oauth2ClientId: string | undefined;
             loginPath: string;
