@@ -41,7 +41,7 @@ const TableTreeSections: FC<Props> = ({
     onSelectedNodeChange,
 }) => {
     const { projectUuid } = useParams<{ projectUuid: string }>();
-    const { user } = useApp();
+    const { user, health: healthState } = useApp();
     const canManageCustomSql = user.data?.ability?.can(
         'manage',
         subject('CustomSql', {
@@ -203,7 +203,7 @@ const TableTreeSections: FC<Props> = ({
 
                     {hasMetrics ? null : (
                         <DocumentationHelpButton
-                            href="https://docs.lightdash.com/guides/how-to-create-metrics"
+                            href={`${healthState.data?.siteHelpdeskUrl}/guides/how-to-create-metrics`}
                             tooltipProps={{
                                 label: (
                                     <>
@@ -247,7 +247,7 @@ const TableTreeSections: FC<Props> = ({
                     </Text>
 
                     <DocumentationHelpButton
-                        href="https://docs.lightdash.com/guides/how-to-create-metrics#-adding-custom-metrics-in-the-explore-view"
+                        href={`${healthState.data?.siteHelpdeskUrl}/guides/how-to-create-metrics#-adding-custom-metrics-in-the-explore-view"`}
                         tooltipProps={{
                             label: (
                                 <>
@@ -290,7 +290,7 @@ const TableTreeSections: FC<Props> = ({
                     </Text>
 
                     <DocumentationHelpButton
-                        href="https://docs.lightdash.com/guides/how-to-create-metrics#-adding-custom-metrics-in-the-explore-view"
+                        href={`${healthState.data?.siteHelpdeskUrl}/guides/how-to-create-metrics#-adding-custom-metrics-in-the-explore-view`}
                         tooltipProps={{
                             label: (
                                 <>

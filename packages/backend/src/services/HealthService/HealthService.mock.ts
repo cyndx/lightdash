@@ -19,6 +19,7 @@ export const BaseResponse: HealthState = {
     hasSlack: false,
     auth: {
         disablePasswordAuthentication: false,
+        disableRegistration: false,
         google: {
             enabled: false,
             loginPath: '',

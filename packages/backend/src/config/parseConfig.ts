@@ -157,6 +157,27 @@ export type LightdashConfig = {
     pylon: PylonConfig;
     siteUrl: string;
     staticIp: string;
+    siteName: string;
+    siteLogo: string;
+    siteLogoAlt: string;
+    siteLogoDark: string;
+    siteLogoBlack: string;
+    siteLogoWhite: string;
+    siteTouchIconGrey: string;
+    siteTitleText: string;
+    siteFavicon: string;
+    siteTouchIcon: string;
+    siteGithubIcon: string;
+    siteGithubUrl: string;
+    siteLinkedinIcon: string;
+    siteLinkedinUrl: string;
+    siteTwitterIcon: string;
+    siteTwitterUrl: string;
+    siteTOSUrl: string;
+    sitePrivacyPolicyUrl: string;
+    siteSlackCommunityUrl: string;
+    siteHelpdeskUrl: string;
+    supportEmail: string;
     database: {
         connectionUri: string | undefined;
         maxConnections: number | undefined;
@@ -319,6 +340,7 @@ type AuthOidcConfig = {
 
 export type AuthConfig = {
     disablePasswordAuthentication: boolean;
+    disableRegistration: boolean;
     enableGroupSync: boolean;
     enableOidcLinking: boolean;
     google: AuthGoogleConfig;
@@ -349,6 +371,7 @@ const DEFAULT_JOB_TIMEOUT = 1000 * 60 * 10; // 10 minutes
 
 const mergeWithEnvironment = (config: LightdashConfigIn): LightdashConfig => {
     const lightdashSecret = process.env.LIGHTDASH_SECRET;
+    const siteName = process.env.SITE_NAME || 'Lightdash';
     if (!lightdashSecret) {
         throw new ParseError(
             `Must specify environment variable LIGHTDASH_SECRET. Keep this value hidden!`,
@@ -358,7 +381,7 @@ const mergeWithEnvironment = (config: LightdashConfigIn): LightdashConfig => {
     const lightdashMode = process.env.LIGHTDASH_MODE;
     if (lightdashMode !== undefined && !isLightdashMode(lightdashMode)) {
         throw new ParseError(
-            `Lightdash mode set by environment variable LIGHTDASH_MODE=${lightdashMode} is invalid. Must be one of ${Object.values(
+            `${siteName} mode set by environment variable LIGHTDASH_MODE=${lightdashMode} is invalid. Must be one of ${Object.values(
                 LightdashMode,
             )}`,
             {},
@@ -367,12 +390,13 @@ const mergeWithEnvironment = (config: LightdashConfigIn): LightdashConfig => {
 
     const mode = lightdashMode || config.mode;
     const siteUrl = process.env.SITE_URL || 'http://localhost:8080';
+
     if (
         process.env.NODE_ENV !== 'development' &&
         siteUrl.includes('localhost')
     ) {
         console.log(
-            `WARNING: Using ${siteUrl} as the base SITE_URL for Lightdash. This is not suitable for production. Update with a top-level domain using https such as https://lightdash.mycompany.com`,
+            `WARNING: Using ${siteUrl} as the base SITE_URL for ${siteName}. This is not suitable for production. Update with a top-level domain using https such as https://lightdash.mycompany.com`,
         );
     }
 
@@ -437,6 +461,8 @@ const mergeWithEnvironment = (config: LightdashConfigIn): LightdashConfig => {
             disablePat: process.env.DISABLE_PAT === 'true',
             disablePasswordAuthentication:
                 process.env.AUTH_DISABLE_PASSWORD_AUTHENTICATION === 'true',
+            disableRegistration:
+                process.env.AUTH_DISABLE_REGISTRATION === 'true',
             enableGroupSync: process.env.AUTH_ENABLE_GROUP_SYNC === 'true',
             enableOidcLinking: process.env.AUTH_ENABLE_OIDC_LINKING === 'true',
             google: {
@@ -522,6 +548,45 @@ const mergeWithEnvironment = (config: LightdashConfigIn): LightdashConfig => {
                 process.env.PYLON_IDENTITY_VERIFICATION_SECRET,
         },
         siteUrl,
+        siteName: process.env.SITE_NAME || 'Lightdash',
+        siteLogo: process.env.SITE_LOGO || '{{host}}/lightdash-logo.png',
+        siteLogoAlt: process.env.SITE_LOGO_ALT || 'Lightdash logo',
+        siteLogoDark: process.env.SITE_LOGO || '{{host}}/lightdash-logo.png',
+        siteLogoBlack: process.env.SITE_LOGO || '{{host}}/lightdash-logo.png',
+        siteLogoWhite: process.env.SITE_LOGO || '{{host}}/lightdash-logo.png',
+        siteTitleText:
+            process.env.SITE_TITLE_TEXT ||
+            "Explore and visualize your team's analytics and metrics",
+        siteFavicon: process.env.SITE_FAVICON || '/favicon.ico',
+        siteTouchIcon: process.env.SITE_TOUCH_ICON || '/apple-touch-icon.png',
+        siteTouchIconGrey:
+            process.env.SITE_LOGO || '{{host}}/lightdash-logo.png',
+        siteGithubIcon: process.env.SITE_GITHUB_ICON || '{{host}}/github.png',
+        siteGithubUrl:
+            process.env.SITE_GITHUB_URL ||
+            'https://github.com/lightdash/lightdash',
+        siteLinkedinIcon:
+            process.env.SITE_LINKEDIN_ICON || '{{host}}/linkedin.png',
+        siteLinkedinUrl:
+            process.env.SITE_LINKEDIN_URL ||
+            'https://www.linkedin.com/company/lightdash',
+        siteTwitterIcon:
+            process.env.SITE_TWITTER_ICON || '{{host}}/twitter.png',
+        siteTwitterUrl:
+            process.env.SITE_TWITTER_URL ||
+            'https://twitter.com/lightdash_devs',
+        siteTOSUrl:
+            process.env.SITE_TOS_URL ||
+            'https://lightdash.com/terms-of-service',
+        siteHelpdeskUrl:
+            process.env.SITE_HELPDESK_URL || 'https://docs.lightdash.com',
+        supportEmail: process.env.SUPPORT_EMAIL || 'support@lightdash.com',
+        sitePrivacyPolicyUrl:
+            process.env.SITE_PRIVACY_POLICY_URL ||
+            'https://lightdash.com/privacy-policy',
+        siteSlackCommunityUrl:
+            process.env.SITE_SLACK_COMMUNITY_URL ||
+            'https://lightdash-community.slack.com/ssb/redirect',
         staticIp: process.env.STATIC_IP || '',
         allowMultiOrgs: process.env.ALLOW_MULTIPLE_ORGS === 'true',
         maxPayloadSize: process.env.LIGHTDASH_MAX_PAYLOAD || '5mb',
@@ -658,7 +723,7 @@ export const parseConfig = (raw: any): LightdashConfig => {
             .map((err) => `Field at ${err.instancePath} ${err.message}`)
             .join('\n');
         throw new ParseError(
-            `Lightdash config file successfully loaded but invalid: ${lineErrorMessages}`,
+            `Application config file successfully loaded but invalid: ${lineErrorMessages}`,
             {},
         );
     }

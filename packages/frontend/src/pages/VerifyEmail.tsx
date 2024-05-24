@@ -65,8 +65,12 @@ const VerifyEmailPage: FC = () => {
         <Page title="Verify your email" withCenteredContent withNavbar={false}>
             <Stack w={400} mt="4xl">
                 <Image
-                    src={LightdashLogo}
-                    alt="lightdash logo"
+                    src={
+                        health.data?.siteLogoBlack
+                            ? health.data?.siteLogoBlack
+                            : LightdashLogo
+                    }
+                    alt={`${health.data?.siteName} logo`}
                     width={130}
                     mx="auto"
                     my="lg"
@@ -75,8 +79,8 @@ const VerifyEmailPage: FC = () => {
                     <VerifyEmailForm />
                 </Card>
                 <Text color="gray.6" ta="center" px="xs">
-                    You need to verify your email to get access to Lightdash. If
-                    you need help, you can{' '}
+                    You need to verify your email to get access to $
+                    {health.data?.siteName}. If you need help, you can{' '}
                     <Anchor onClick={() => showIntercom()}>
                         chat to support here.
                     </Anchor>

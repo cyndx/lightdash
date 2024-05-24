@@ -148,7 +148,7 @@ export class UnexpectedGitError extends LightdashError {
 
 export class UnexpectedDatabaseError extends LightdashError {
     constructor(
-        message = 'Unexpected error in Lightdash database.',
+        message = 'Unexpected error in the application database',
         data: { [key: string]: any } = {},
     ) {
         super({
@@ -162,7 +162,7 @@ export class UnexpectedDatabaseError extends LightdashError {
 
 export class ParseError extends LightdashError {
     constructor(
-        message = 'Error parsing dbt project and lightdash metadata',
+        message = 'Error parsing dbt project and application metadata',
         data: { [key: string]: any } = {},
     ) {
         super({
@@ -176,7 +176,7 @@ export class ParseError extends LightdashError {
 
 export class CompileError extends LightdashError {
     constructor(
-        message = 'Error compiling sql from Lightdash configuration',
+        message = 'Error compiling sql from the application configuration',
         data: Record<string, any> = {},
     ) {
         super({

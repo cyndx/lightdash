@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, type FC } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import { lightdashApi } from '../api';
 import Page from '../components/common/Page/Page';
 import { ThirdPartySignInButton } from '../components/common/ThirdPartySignInButton';
@@ -50,6 +50,7 @@ const Register: FC = () => {
     }, [flashMessages.data, showToastError]);
     const allowPasswordAuthentication =
         !health.data?.auth.disablePasswordAuthentication;
+    const allowRegistration = !health.data?.auth.disableRegistration;
     const { identify } = useTracking();
     const redirectUrl = location.state?.from
         ? `${location.state.from.pathname}${location.state.from.search}`
@@ -74,6 +75,17 @@ const Register: FC = () => {
 
     if (health.isInitialLoading) {
         return <PageSpinner />;
+    }
+
+    if (!allowRegistration) {
+        return (
+            <Redirect
+                to={{
+                    pathname: '/login',
+                    state: { from: location.state?.from },
+                }}
+            />
+        );
     }
 
     const ssoAvailable =
@@ -122,8 +134,12 @@ const Register: FC = () => {
         <Page title="Register" withCenteredContent withNavbar={false}>
             <Stack w={400} mt="4xl">
                 <Image
-                    src={LightdashLogo}
-                    alt="lightdash logo"
+                    src={
+                        health.data?.siteLogoBlack
+                            ? health.data?.siteLogoBlack
+                            : LightdashLogo
+                    }
+                    alt={`${health.data?.siteName} logo`}
                     width={130}
                     mx="auto"
                     my="lg"
@@ -139,16 +155,13 @@ const Register: FC = () => {
                     <br />
                     our{' '}
                     <Anchor
-                        href="https://www.lightdash.com/privacy-policy"
+                        href={`${health.data?.sitePrivacyPolicyUrl}`}
                         target="_blank"
                     >
                         Privacy Policy
                     </Anchor>{' '}
                     and our{' '}
-                    <Anchor
-                        href="https://www.lightdash.com/terms-of-service"
-                        target="_blank"
-                    >
+                    <Anchor href={`${health.data?.siteTOSUrl}`} target="_blank">
                         Terms of Service.
                     </Anchor>
                 </Text>

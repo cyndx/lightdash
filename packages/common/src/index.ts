@@ -699,6 +699,7 @@ export type HealthState = {
     sentry: Pick<SentryConfig, 'frontend' | 'release' | 'environment'>;
     auth: {
         disablePasswordAuthentication: boolean;
+        disableRegistration: boolean;
         google: {
             oauth2ClientId: string | undefined;
             loginPath: string;
@@ -750,6 +751,27 @@ export type HealthState = {
     hasDbtSemanticLayer: boolean;
     hasGroups: boolean;
     hasExtendedUsageAnalytics: boolean;
+    siteName: string;
+    siteLogo: string;
+    siteLogoAlt: string;
+    siteLogoDark: string;
+    siteLogoBlack: string;
+    siteLogoWhite: string;
+    siteTouchIconGrey: string;
+    siteTitleText: string;
+    siteFavicon: string;
+    siteTouchIcon: string;
+    siteGithubIcon: string;
+    siteGithubUrl: string;
+    siteLinkedinIcon: string;
+    siteLinkedinUrl: string;
+    siteTwitterIcon: string;
+    siteTwitterUrl: string;
+    siteHelpdeskUrl: string;
+    siteSlackCommunityUrl: string;
+    supportEmail: string;
+    sitePrivacyPolicyUrl: string;
+    siteTOSUrl: string;
 };
 
 export enum DBFieldTypes {

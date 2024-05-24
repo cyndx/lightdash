@@ -1,7 +1,9 @@
-import { ActionIcon, Box, Button, Group } from '@mantine/core';
+import { ActionIcon, Box, Button, Group, Image } from '@mantine/core';
+import { IconAdjustments } from '@tabler/icons-react';
 import { type FC } from 'react';
 import { Link } from 'react-router-dom';
 import Omnibar from '../../features/omnibar';
+import { useApp } from '../../providers/AppProvider';
 import Logo from '../../svgs/logo-icon.svg?react';
 import BrowseMenu from './BrowseMenu';
 import ExploreMenu from './ExploreMenu';
@@ -25,7 +27,7 @@ export const MainNavBarContent: FC<Props> = ({
     const homeUrl = activeProjectUuid
         ? `/projects/${activeProjectUuid}/home`
         : '/';
-
+    const { health } = useApp();
     return (
         <>
             <Group align="center" sx={{ flexShrink: 0 }}>
@@ -35,7 +37,17 @@ export const MainNavBarContent: FC<Props> = ({
                     title="Home"
                     size="lg"
                 >
-                    <Logo />
+                    {health.data?.siteLogo ? (
+                        <Image
+                            src={health.data?.siteLogo}
+                            width={'100%'}
+                            alt={
+                                (health.data?.siteName ? health.data?.siteName : 'Lightdash')+' logo'
+                            }
+                        />
+                    ) : (
+                        <Logo />
+                    )}
                 </ActionIcon>
 
                 {!isLoadingActiveProject && activeProjectUuid && (

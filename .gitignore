@@ -46,6 +46,9 @@ package-lock.json
 # typescript
 *.tsbuildinfo
 
+# scripts
+/scripts/deploy.sh
+
 # examples
 /examples/full-jaffle-shop-demo/dbt/target
 /dbt
@@ -54,6 +57,9 @@ package-lock.json
 # docs
 /docs/build
 /docs/.docusaurus
+
+# docker
+/docker/prod-entrypoint.sh.local
 
 # credentials
 credentials.json
