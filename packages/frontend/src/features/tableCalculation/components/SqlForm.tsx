@@ -10,6 +10,7 @@ import { type FC } from 'react';
 import AceEditor, { type IAceEditorProps } from 'react-ace';
 import styled, { css } from 'styled-components';
 import MantineIcon from '../../../components/common/MantineIcon';
+import { useTableCalculationAceEditorCompleter } from '../../../hooks/useExplorerAceEditorCompleter';
 import { useExplorerAceEditorCompleter } from '../../../hooks/useExplorerAceEditorCompleter';
 import { useApp } from '../../../providers/AppProvider';
 import { type TableCalculationForm } from '../types';
@@ -27,7 +28,7 @@ type Props = {
     isFullScreen: boolean;
 };
 
-const SqlEditor = styled(AceEditor)<
+export const SqlEditor = styled(AceEditor)<
     IAceEditorProps & { isFullScreen: boolean; gutterBackgroundColor: string }
 >`
     width: 100%;
@@ -51,8 +52,8 @@ export const SqlForm: FC<Props> = ({ form, isFullScreen }) => {
         key: SOFT_WRAP_LOCAL_STORAGE_KEY,
         defaultValue: true,
     });
+    const { setAceEditor } = useTableCalculationAceEditorCompleter();
     const { health } = useApp();
-    const { setAceEditor } = useExplorerAceEditorCompleter();
 
     return (
         <>

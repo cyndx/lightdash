@@ -72,6 +72,9 @@ export const lightdashConfigMock: LightdashConfig = {
         appId: '',
         apiBase: '',
     },
+    pylon: {
+        appId: '',
+    },
     lightdashSecret: '',
     logging: {
         level: 'debug',
@@ -121,6 +124,7 @@ export const lightdashConfigMock: LightdashConfig = {
     query: {
         maxLimit: 5000,
         csvCellsLimit: 100000,
+        timezone: undefined,
     },
     siteName: 'Lightdash Demo',
     siteLogo: '',

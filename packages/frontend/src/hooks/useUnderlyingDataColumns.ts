@@ -1,6 +1,6 @@
 import {
-    fieldId as getFieldId,
     formatItemValue,
+    getItemId,
     type ApiQueryResults,
     type Field,
     type FieldId,
@@ -10,6 +10,7 @@ import {
     columnHelper,
     type TableColumn,
 } from '../components/common/Table/types';
+import { getFormattedValueCell } from './useColumns';
 import useColumnTotals from './useColumnTotals';
 
 type Args = {
@@ -28,15 +29,14 @@ const useUnderlyingDataColumns = ({
     return useMemo(() => {
         if (fieldsMap) {
             return Object.values(fieldsMap).map<TableColumn>((dimension) => {
-                const fieldId = getFieldId(dimension);
+                const fieldId = getItemId(dimension);
                 return columnHelper.accessor((row) => row[fieldId], {
                     id: fieldId,
                     header: () =>
                         columnHeader !== undefined
                             ? columnHeader(dimension)
                             : dimension.label,
-                    cell: (info: any) =>
-                        info.getValue()?.value.formatted || '-',
+                    cell: getFormattedValueCell,
                     footer: () =>
                         totals[fieldId]
                             ? formatItemValue(dimension, totals[fieldId])
